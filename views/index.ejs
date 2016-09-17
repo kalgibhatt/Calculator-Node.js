@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator App</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Calculator App</h1>
+    <p>A Simple Calculator performing Addition, Subtraction, Multiplication and Division</p>
+  	<form id="main" action="calculator" method="get">
+  	<div class="calculate">
+  		<div style="float:left" class="spacer">
+  			<input type = "textbox" placeholder="0" value="<%=result%>" autofocus="autofocus" max-width="5" class="result" id="result" onkeypress="return onlyNumber(event,this);">
+  			<a href="/" class="cbutton">C</a>
+  			<input type="hidden" id="val1" name="val1" value="">
+  			<input type="hidden" id="val2" name="val2" value="">
+  			<input type="hidden" id="operator" name="operator" value="">
+  			
+  		</div>
+  		<div>
+  			<button type="button" class="button" onclick="display(1)">1</button>
+  			<button type="button" class="button" onclick="display(2)">2</button>
+  			<button type="button" class="button" onclick="display(3)">3</button>
+  			<button type="button" class="button" onclick="display('&divide')">&divide;</button>
+  		</div>
+  		<div>
+  			<button type="button" class="button" onclick="display(4)">4</button>
+  			<button type="button" class="button" onclick="display(5)">5</button>
+  			<button type="button" class="button" onclick="display(6)">6</button>
+  			<button type="button" class="button" onclick="display('&times')">&times;</button>
+  		</div>
+  		<div>
+  			<button type="button" class="button" onclick="display(7)">7</button>
+  			<button type="button" class="button" onclick="display(8)">8</button>
+  			<button type="button" class="button" onclick="display(9)">9</button>
+  			<button type="button" class="button" onclick="display('-')">-</button>
+  		</div>
+  		<div>
+  			<button type="button" class="button" onclick="display(0)">0</button>
+  			<button type="button" class="button" onclick="display('.')">.</button>
+  			<button type="submit" id="submit" class="button" onclick="return calculate();">=</button>
+  			<button type="button" class="button" onclick="display('+')">+</button> 			
+  		</div>
+	</div>  
+	</form>
+	<script = "text/javascript">
+		function display(number)
+		{
+			document.getElementById("result").value += number;
+		} 
+		
+        function onlyNumber(e, t)
+        {
+            try
+            {
+                if (window.event)
+                {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e)
+                {
+                    var charCode = e.which;
+                }
+                else
+                { 
+                	return true; 
+                }
+                if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)
+                 && charCode != 43 && charCode != 45)
+                {
+                    if(charCode == 42)
+                    {
+                    	document.getElementById("result").value += "×";
+                    }
+                    if(charCode == 47)
+                    {
+                    	document.getElementById("result").value += "÷";
+                    }
+                    return false;
+                }
+                return true;
+            }
+            catch (err)
+            {
+                alert(err.Description);
+            }
+        }
+        
+        function calculate()
+        {
+        	var s = document.getElementById("result").value;
+        	
+        	if(s.indexOf('+') > -1) {
+        		var splits = s.split("+");
+        		document.getElementById("val1").value = splits[0];
+ 				document.getElementById("val2").value = splits[1];
+ 				document.getElementById("operator").value = '+';
+ 				document.getElementById("main").submit();
+        	} else if(s.indexOf('-') > -1) {
+        		var splits = s.split("-");
+        		document.getElementById("val1").value = splits[0];
+ 				document.getElementById("val2").value = splits[1];
+ 				document.getElementById("operator").value = '-';
+ 				document.getElementById("main").submit();
+        	} else if(s.indexOf('×') > -1) {
+        		var splits = s.split("×");
+        		document.getElementById("val1").value = splits[0];
+ 				document.getElementById("val2").value = splits[1];
+ 				document.getElementById("operator").value = '×';
+ 				document.getElementById("main").submit();
+        	} else if(s.indexOf('÷') > -1) {
+        		var splits = s.split("÷");
+        		document.getElementById("val1").value = splits[0];
+ 				document.getElementById("val2").value = splits[1];
+ 				document.getElementById("operator").value = '÷';
+ 				document.getElementById("main").submit();
+        	}
+        }	
+	</script>
+  </body>
+</html>
