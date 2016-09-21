@@ -3,50 +3,99 @@
   <head>
     <title>Calculator App</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<!-- Loading the AngularJS file from /public/angularJS folder -->
   </head>
-  <body>
-    <h1>Calculator App</h1>
-    <p>A Simple Calculator performing Addition, Subtraction, Multiplication and Division</p>
-  	<form id="main" action="calculator" method="get">
-  	<div class="calculate">
-  		<div style="float:left" class="spacer">
-  			<input type = "textbox" placeholder="0" value="<%=result%>" autofocus="autofocus" max-width="5" class="result" id="result" onkeypress="return onlyNumber(event,this);">
-  			<a href="/" class="cbutton">C</a>
-  			<input type="hidden" id="val1" name="val1" value="">
-  			<input type="hidden" id="val2" name="val2" value="">
-  			<input type="hidden" id="operator" name="operator" value="">
-  			
-  		</div>
-  		<div>
-  			<button type="button" class="button" onclick="display(1)">1</button>
-  			<button type="button" class="button" onclick="display(2)">2</button>
-  			<button type="button" class="button" onclick="display(3)">3</button>
-  			<button type="button" class="button" onclick="display('&divide')">&divide;</button>
-  		</div>
-  		<div>
-  			<button type="button" class="button" onclick="display(4)">4</button>
-  			<button type="button" class="button" onclick="display(5)">5</button>
-  			<button type="button" class="button" onclick="display(6)">6</button>
-  			<button type="button" class="button" onclick="display('&times')">&times;</button>
-  		</div>
-  		<div>
-  			<button type="button" class="button" onclick="display(7)">7</button>
-  			<button type="button" class="button" onclick="display(8)">8</button>
-  			<button type="button" class="button" onclick="display(9)">9</button>
-  			<button type="button" class="button" onclick="display('-')">-</button>
-  		</div>
-  		<div>
-  			<button type="button" class="button" onclick="display(0)">0</button>
-  			<button type="button" class="button" onclick="display('.')">.</button>
-  			<button type="submit" id="submit" class="button" onclick="return calculate();">=</button>
-  			<button type="button" class="button" onclick="display('+')">+</button> 			
-  		</div>
-	</div>  
-	</form>
+  <body class="body">
+  	<div class="container-fluid">
+	  	<div class="row">
+		  	<div class="col-xs-12 heading">Calculator App</div>
+		    <div class="col-xs-12 title">A Simple Calculator performing Addition, Subtraction, Multiplication and Division</div>
+	    </div>
+	    <div class="row">
+		    <div>
+			  	<form id="main" action="calculator" method="get">
+				  	<div class="calculate spacer">
+				  		<div style="float:left">
+				  			<input type = "textbox" placeholder="0" value="<%=result%>" autofocus="autofocus" max-width="5" class="result" id="result" onkeypress="return onlyNumber(event,this);">
+				  			<a href="/" class="cbutton">C</a>
+				  			<input type="hidden" id="val1" name="val1" value="">
+				  			<input type="hidden" id="val2" name="val2" value="">
+				  			<input type="hidden" id="operator" name="operator" value="">		
+				  		</div>
+				  		<div>
+				  			<button type="button" class="button" onclick="display(1)">1</button>
+				  			<button type="button" class="button" onclick="display(2)">2</button>
+				  			<button type="button" class="button" onclick="display(3)">3</button>
+				  			<button type="button" class="button" onclick="display('&divide')">&divide;</button>
+				  		</div>
+				  		<div>
+				  			<button type="button" class="button" onclick="display(4)">4</button>
+				  			<button type="button" class="button" onclick="display(5)">5</button>
+				  			<button type="button" class="button" onclick="display(6)">6</button>
+				  			<button type="button" class="button" onclick="display('&times')">&times;</button>
+				  		</div>
+				  		<div>
+				  			<button type="button" class="button" onclick="display(7)">7</button>
+				  			<button type="button" class="button" onclick="display(8)">8</button>
+				  			<button type="button" class="button" onclick="display(9)">9</button>
+				  			<button type="button" class="button" onclick="display('-')">-</button>
+				  		</div>
+				  		<div>
+				  			<button type="button" class="button" onclick="display(0)">0</button>
+				  			<button type="button" class="button" onclick="display('.')">.</button>
+				  			<button type="submit" id="submit" class="button" onclick="return calculate();">=</button>
+				  			<button type="button" class="button" onclick="display('+')">+</button> 			
+				  		</div>
+					</div> 
+				</form>
+			</div>
+		</div>
+	</div>
+		
 	<script = "text/javascript">
 		function display(number)
-		{
-			document.getElementById("result").value += number;
+		{	
+			var result = document.getElementById("result").value;
+			if(number == '+' || number == '×' || number == '÷' || number == '-') {
+				var symbols_re = new RegExp('[+×÷-]{1}');			
+				if(result.match(symbols_re) !== null || result == "") {
+					if(result.indexOf('+') === result.length - 1 || result.indexOf('-') === result.length - 1 || 
+					result.indexOf('×') === result.length - 1 || result.indexOf('÷') === result.length - 1) {
+						result = result.replace(result.charAt(result.length - 1),number);
+					} return false;
+				}else {
+					document.getElementById("result").value += number;
+				}
+			}
+			else if(number == '.')
+			{
+				var period_re = new RegExp('[\.]{1}');
+				var symbols_re = new RegExp('[+×÷-]{1}');
+				if(result.match(period_re) !== null) {
+					if(result.match(symbols_re) !== null) {
+						if(result.indexOf('+')  > result.lastIndexOf('.') || result.indexOf('-') > result.lastIndexOf('.') || 
+						result.indexOf('×') > result.lastIndexOf('.') || result.indexOf('÷') > result.lastIndexOf('.')) {							
+							document.getElementById("result").value += number;
+						} else {
+							return false;
+						} 
+					} else {
+						return false;
+					}
+				} else {
+					document.getElementById("result").value += number;
+				}
+			}
+			else
+			{
+				document.getElementById("result").value += number;
+			}
 		} 
 		
         function onlyNumber(e, t)
@@ -66,7 +115,7 @@
                 	return true; 
                 }
                 if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)
-                 && charCode != 43 && charCode != 45)
+                 && charCode != 43 && charCode && charCode != 45)
                 {
                     if(charCode == 42)
                     {
@@ -90,17 +139,11 @@
         {
         	var s = document.getElementById("result").value;
         	
-        	if(s.indexOf('+') > -1) {
+        	if(s.indexOf('+') > -1 ) {
         		var splits = s.split("+");
         		document.getElementById("val1").value = splits[0];
  				document.getElementById("val2").value = splits[1];
  				document.getElementById("operator").value = '+';
- 				document.getElementById("main").submit();
-        	} else if(s.indexOf('-') > -1) {
-        		var splits = s.split("-");
-        		document.getElementById("val1").value = splits[0];
- 				document.getElementById("val2").value = splits[1];
- 				document.getElementById("operator").value = '-';
  				document.getElementById("main").submit();
         	} else if(s.indexOf('×') > -1) {
         		var splits = s.split("×");
@@ -113,6 +156,19 @@
         		document.getElementById("val1").value = splits[0];
  				document.getElementById("val2").value = splits[1];
  				document.getElementById("operator").value = '÷';
+ 				document.getElementById("main").submit();
+        	} else if(s.indexOf('-') > -1) {
+        		var splits = s.split("-");
+        		if(splits.length == 2) {
+        			document.getElementById("val1").value = splits[0];
+ 					document.getElementById("val2").value = splits[1];
+        		} else if(splits.length == 3) {
+        			if(splits[0] == "") {
+        				document.getElementById("val1").value = '-' + splits[1];
+ 						document.getElementById("val2").value = splits[2];
+        			}
+        		}
+ 				document.getElementById("operator").value = '-';
  				document.getElementById("main").submit();
         	}
         }	
