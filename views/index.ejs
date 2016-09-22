@@ -53,7 +53,7 @@
 				  			<button type="button" class="button" onclick="display('+')">+</button> 			
 				  		</div>
 					</div> 
-				</form>
+				</form>			
 			</div>
 		</div>
 	</div>
@@ -66,9 +66,12 @@
 				var symbols_re = new RegExp('[+×÷-]{1}');			
 				if(result.match(symbols_re) !== null || result == "") {
 					if(result.indexOf('+') === result.length - 1 || result.indexOf('-') === result.length - 1 || 
-					result.indexOf('×') === result.length - 1 || result.indexOf('÷') === result.length - 1) {
-						result = result.replace(result.charAt(result.length - 1),number);
-					} return false;
+					result.indexOf('×') === result.length - 1 || result.indexOf('÷') === result.length - 1) {						
+						if(result !== "") {
+						document.getElementById("result").value = result.replace(result.charAt(result.length-1),number);
+						}
+					} 
+					return false;
 				}else {
 					document.getElementById("result").value += number;
 				}
@@ -169,6 +172,11 @@
         			}
         		}
  				document.getElementById("operator").value = '-';
+ 				document.getElementById("main").submit();
+        	} else {
+        		document.getElementById("operator").value = '+';
+        		document.getElementById("val1").value = s;
+ 				document.getElementById("val2").value = 0;
  				document.getElementById("main").submit();
         	}
         }	
