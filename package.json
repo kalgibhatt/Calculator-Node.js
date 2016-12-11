@@ -6,8 +6,9 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
     "ejs": "*",
-    "nodemon" : "*"
+    "express": "3.2.6",
+    "nodemon": "*",
+    "soap": "^0.18.0"
   }
 }

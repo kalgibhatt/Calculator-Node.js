@@ -1,7 +1,9 @@
 var express = require('express');
-/*
- * GET home page.
- */
+var baseURL = "http://localhost:8080/CalculatorWebServices/services/CalculatorServices?wsdl";
+var soap = require('soap');
+var option = {
+		ignoreNamespaces : true
+}
 
 exports.index = function(req, res){
   res.render('index', { title: 'Calculator' });
@@ -18,20 +20,65 @@ exports.index = function(req,res) {
 	operator = req.param("operator");
 	if(operator === '+')
 	{
-		result = num1 + num2;
+		soap.createClient(baseURL, option, function(err, client) {
+			client.add({
+				val1	:	num1,
+				val2	:	num2
+			},function(err,result) {
+				if(err) {
+					res.render('index', { result: "error" });
+				} else {
+					res.render('index', { result: result.addReturn });
+				}
+			})
+		})
 	}
 	else if(operator === '-')
 	{
-		result = num1 - num2;
+		soap.createClient(baseURL, option, function(err, client) {
+			client.subtract({
+				val1	:	num1,
+				val2	:	num2
+			},function(err,result) {
+				if(err) {
+					res.render('index', { result: "error" });
+				} else {
+					res.render('index', { result: result.subtractReturn });
+				}
+			})
+		})
 	}
 	else if(operator === '×')
 	{
-		result = num1 * num2;
+		soap.createClient(baseURL, option, function(err, client) {
+			client.multiply({
+				val1	:	num1,
+				val2	:	num2
+			},function(err,result) {
+				if(err) {
+					res.render('index', { result: "error" });
+				} else {
+					res.render('index', { result: result.multiplyReturn });
+				}
+			})
+		})
 	}
 	else if(operator === '÷')
 	{
-		result = num1 / num2;
+		soap.createClient(baseURL, option, function(err, client) {
+			client.divide({
+				val1	:	num1,
+				val2	:	num2
+			},function(err,result) {
+				if(err) {
+					res.render('index', { result: "error" });
+				} else {
+					res.render('index', { result: result.divideReturn });
+				}
+			})
+		})
+	} else {
+		res.render('index', { result: result });
 	}
-	res.render('index', { result: result });
 };
 
